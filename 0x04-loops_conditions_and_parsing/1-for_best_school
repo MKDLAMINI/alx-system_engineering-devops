@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Iterates "Best School" 10 times.
 
 for (( i=0; i<10; i++ ))
 do
