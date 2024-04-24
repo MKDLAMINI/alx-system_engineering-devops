@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Configure Nginx to redirect to another page
+
+
+echo -e "Updating and installing Nginx.\n"
+sudo apt-get update -y -qq && \
+         sudo apt-get install nginx -y
+
+echo -e "\nSetting up some minor stuff.\n"
+
+# initialize nginx service
+sudo service nginx start
+
+# give nginx firewall permissions
+sudo ufw allow 'Nginx HTTP'
+
+# grant user ownership to files
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+
+# create backup for index
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+
+# create new index
+echo -e "Hello World!" > /var/www/html/index.nginx-debian.html
+
+# set up /redirect_me to another page
+sudo sed -i '24i\   rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
+
+# reboot nginx
+sudo service nginx restart
+
+echo -e "\nCompleted.\n"
