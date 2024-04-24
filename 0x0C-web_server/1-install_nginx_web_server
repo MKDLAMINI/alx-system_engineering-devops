@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Configure a new ubuntu machine by getting Nginx
+
+echo -e "Updating and installing Nginx.\n"
+sudo apt-get update -y -qq && \
+    sudo apt-get install nginx -y
+
+echo -e "\nSetting up some minor stuff.\n"
+
+# initialize nginx
+sudo service nginx start
+
+# give nginx firewall permission
+sudo ufw allow 'Nginx HTTP'
+
+# transfer ownership of files to user
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+
+# create a backup for index
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+
+# create new index
+echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
+
+# Reboot nginx
+sudo service nginx restart
+
+echo -e "\nCompleted.\n"
