@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """Write a python script that exports data in the JSON format"""
-import sys
 import csv
-import requests
 import json
+import requests
+import sys
 
 
 if __name__ == '__main__':
