@@ -1,4 +1,5 @@
-# write a script that fixes nginx to accept and serve more requests
+# write a script that fixes nginx to accept and serve more requests.
+# nginx should return requests without failure
 
 exec {'modify max open files limit setting':
   command => 'sed -i "s/15/10000/" /etc/default/nginx && sudo service nginx restart',
